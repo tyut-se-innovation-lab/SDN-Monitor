@@ -24,7 +24,6 @@ target/
 *.iws
 *.iml
 *.ipr
-ruoyi-admin/src/main/resources/application-druid.yml
 
 ### JRebel ###
 rebel.xml
