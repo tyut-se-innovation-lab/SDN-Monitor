@@ -8,7 +8,7 @@ import team.sdn.sdnutils.TopologyUtils;
 public class TopologyUtilsTest {
     @Test
     public void getTopologyTest(){
-        System.out.println(TopologyUtils.getTopologyFromJson().toString());
+
     }
 
 }
