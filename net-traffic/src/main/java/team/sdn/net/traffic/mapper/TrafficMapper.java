@@ -9,6 +9,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @description 网络流量Mapper类
  **/
 @Mapper
-public class TrafficMapper {
+public interface TrafficMapper {
 
 }

@@ -1,7 +1,9 @@
 package team.sdn.net.traffic.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import team.sdn.net.traffic.mapper.TrafficMapper;
+import team.sdn.net.traffic.service.TrafficService;
 
 /**
  * @author TokisakiKurumi
@@ -9,9 +11,29 @@ import team.sdn.net.traffic.mapper.TrafficMapper;
  * @date 2023/6/2
  * @description
  **/
-public class TrafficServiceImpl {
+@Service
+public class TrafficServiceImpl implements TrafficService {
 
     @Autowired
     private TrafficMapper mapper;
 
+    @Override
+    public String getAveByteRate() {
+        return null;
+    }
+
+    @Override
+    public String getInstantByteRate() {
+        return null;
+    }
+
+    @Override
+    public String getAvePackRate() {
+        return null;
+    }
+
+    @Override
+    public String getInstantPackRate() {
+        return null;
+    }
 }
