@@ -44,7 +44,12 @@ public class Address {
     public static String[] NODE_CONNECTOR = {"/restconf/operational/opendaylight-inventory:nodes/node/","/opendaylight-inventory:node-connector/"} ;
 
 
-    public static String[] ONE_FLOW = {"/restconf/operational/opendaylight-inventory:nodes/node/","/flow-node-inventory:table/0/flow/"};
+    /**
+     *获取某一个流表详细信息<br/>
+     * GET
+     * 0 + 交换机节点id + 1 + 表id
+     */
+    public static String[] ONE_FLOW = {"/restconf/operational/opendaylight-inventory:nodes/node/","/flow-node-inventory:table/"};
 
 
 }

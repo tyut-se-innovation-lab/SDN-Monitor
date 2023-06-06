@@ -17,6 +17,10 @@ public class TopologyUtils {
         return  HttpSender.get(Address.ODL_ADDRESS+Address.TOPOLOGY,"json");
     }
 
+    public static String getTopologyXML(){
+        return HttpSender.get(Address.ODL_ADDRESS+Address.TOPOLOGY);
+    }
+
     //交换机
     /**
      * 获取所有交换机信息
