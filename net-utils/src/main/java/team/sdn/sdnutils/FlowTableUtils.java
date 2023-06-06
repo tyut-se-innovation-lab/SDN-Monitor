@@ -32,7 +32,7 @@ public class FlowTableUtils {
      * 获取所有的流表
      * @return 所有的流表
      */
-    public static List<OpenFlow> getAllFlowTables(){
+    public static String getAllFlowTables(){
         return null;
     }
 
@@ -41,7 +41,7 @@ public class FlowTableUtils {
      * @param switchId 交换机id
      * @return 流表们
      */
-    public static List<OpenFlow> getAllTablesOfSwitch(String switchId){
+    public static String getAllTablesOfSwitch(String switchId){
         return null;
     }
 
