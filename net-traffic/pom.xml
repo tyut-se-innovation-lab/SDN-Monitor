@@ -38,18 +38,24 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-        <!--类型转换工具类-->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>5.8.15</version>
-        </dependency>
-
         <!--SDN工具类-->
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>net-utils</artifactId>
             <version>3.8.5</version>
+        </dependency>
+
+        <!--Xml文档解析器-->
+        <dependency>
+            <groupId>org.w3c</groupId>
+            <artifactId>dom</artifactId>
+            <version>2.3.0-jaxb-1.0.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20230227</version>
         </dependency>
     </dependencies>
 
