@@ -25,19 +25,13 @@ public class TrafficHandler implements WebSocketHandler {
     private static final AtomicInteger LINK_COUNT = new AtomicInteger(0);
 
     /**
-     * 存储sessionID与对应的WebSocketSession
-     */
-    private static final HashMap<String,WebSocketSession> SESSION_POOL = new HashMap<>();
-
-    /**
      * 网络流量服务类
      */
-    @Autowired
-    private TrafficService service;
+   /* @Autowired
+    private TrafficService service;*/
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        SESSION_POOL.put(session.getId(), session);
         int count = LINK_COUNT.incrementAndGet();
         log.info("sessionID:" + session.getId() + "加入连接");
         log.info("已有" + count + "个连接");
@@ -52,12 +46,10 @@ public class TrafficHandler implements WebSocketHandler {
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
         log.error("SessionID:" + session.getId() + "发生异常(" + exception.toString() + ")");
-        SESSION_POOL.remove(session.getId());
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-        SESSION_POOL.remove(session.getId());
         LINK_COUNT.decrementAndGet();
         log.info("SessionID:" + session.getId() + "退出连接");
     }
