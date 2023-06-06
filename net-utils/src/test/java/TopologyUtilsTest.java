@@ -1,5 +1,4 @@
 import org.junit.Test;
-import team.sdn.domain.Topology;
 import team.sdn.sdnutils.TopologyUtils;
 
 /**
