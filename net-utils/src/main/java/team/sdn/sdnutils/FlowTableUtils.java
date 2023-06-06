@@ -24,7 +24,7 @@ public class FlowTableUtils {
      * @param flow 流表内容
      * @return 是否下发成功
      */
-    public static Boolean addFlowForSwitch(Integer switchId,OpenFlow flow){
+    public static Boolean addFlowForSwitch(String switchId,OpenFlow flow){
         return null;
     }
 
@@ -32,7 +32,7 @@ public class FlowTableUtils {
      * 获取所有的流表
      * @return 所有的流表
      */
-    public static List<OpenFlow> getAllFlowTables(){
+    public static String getAllFlowTables(){
         return null;
     }
 
@@ -41,7 +41,7 @@ public class FlowTableUtils {
      * @param switchId 交换机id
      * @return 流表们
      */
-    public static List<OpenFlow> getAllTablesOfSwitch(Integer switchId){
+    public static String getAllTablesOfSwitch(String switchId){
         return null;
     }
 
@@ -51,7 +51,7 @@ public class FlowTableUtils {
      * @param tableId 流表id
      * @return 是否成功删除
      */
-    public static Boolean deleteFlowTable(Integer switchId,Integer tableId){
+    public static Boolean deleteFlowTable(String switchId,String tableId){
         return null;
     }
     /**
@@ -59,7 +59,7 @@ public class FlowTableUtils {
      * @param switchId 交换机id
      * @return 是否成功删除
      */
-    public static Boolean deleteAllTableOfSwitch(Integer switchId){
+    public static Boolean deleteAllTableOfSwitch(String switchId){
         return null;
     }
 
@@ -69,7 +69,7 @@ public class FlowTableUtils {
      * @param tableId 流表id
      * @return 是否成功删除
      */
-    public static Boolean modifyFlowTable(Integer switchId,Integer tableId){
+    public static Boolean modifyFlowTable(String switchId,String tableId){
         return null;
     }
 }

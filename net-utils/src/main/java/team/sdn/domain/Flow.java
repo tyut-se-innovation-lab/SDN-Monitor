@@ -10,20 +10,20 @@ public class Flow {
     /**
      *传输的字节数
      */
-    private Long transmittedBytes;
+    private Double transmittedBytes;
 
     /**
      * 接收的字节数
      */
-    private Long receivedBytes;
+    private Double receivedBytes;
 
     /**
      *
      */
-    private Long transmittedPkts;
+    private Double transmittedPkts;
 
     /**
      *
      */
-    private Long receivedPkts;
+    private Double receivedPkts;
 }

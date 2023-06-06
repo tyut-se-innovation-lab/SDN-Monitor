@@ -18,7 +18,7 @@ public class NodeConnector {
     /**
      *端口号
      */
-    private Integer portNum;
+    private String portNum;
 
     /**
      * 端口mac地址
