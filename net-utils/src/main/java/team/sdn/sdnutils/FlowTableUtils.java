@@ -18,8 +18,8 @@ public class FlowTableUtils {
      * @param flow 流表内容
      * @return 是否下发成功
      */
-    public static Boolean addFlowForSwitch(String switchId,OpenFlow flow){
-        return null;
+    public static boolean addFlowForSwitch(String switchId,OpenFlow flow){
+        return true;
     }
 
     /**
@@ -37,8 +37,8 @@ public class FlowTableUtils {
      * @param tableId 流表id
      * @return 是否成功删除
      */
-    public static Boolean deleteFlowTable(String switchId,String tableId){
-        return null;
+    public static boolean deleteFlowTable(String switchId,String tableId){
+        return true;
     }
 
 
@@ -48,7 +48,7 @@ public class FlowTableUtils {
      * @param tableId 流表id
      * @return 是否成功删除
      */
-    public static Boolean modifyFlowTable(String switchId,String tableId){
-        return null;
+    public static boolean modifyFlowTable(String switchId,String tableId){
+        return false;
     }
 }
