@@ -14,7 +14,7 @@ public class TopologyUtils {
      * @return 拓扑类
      */
     public static String getTopology(){
-        return  HttpSender.get(Address.ODL_ADDRESS+Address.TOPOLOGY);
+        return  HttpSender.get(Address.ODL_ADDRESS+Address.TOPOLOGY,"json");
     }
 
     //交换机

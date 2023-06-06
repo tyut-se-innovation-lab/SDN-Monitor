@@ -21,7 +21,10 @@ import java.io.IOException;
  **/
 @Slf4j
 public class HttpSender {
-    public static String get(String url) {
+    public static String get(String url){
+        return get(url,"xml");
+    }
+    public static String get(String url,String header) {
         try {
 
             CredentialsProvider provider = new BasicCredentialsProvider();
@@ -34,6 +37,7 @@ public class HttpSender {
             HttpClient httpClient = HttpClientBuilder.create().setDefaultCredentialsProvider(provider).build();
 //        2、创建请求方式的实例
             HttpGet httpGet = new HttpGet(url);
+            httpGet.setHeader("Accept","application/"+header);
 //        3、添加请求参数(设置请求和传输超时时间)
             RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(60000).setConnectTimeout(60000).build();
             httpGet.setConfig(requestConfig);
