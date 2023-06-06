@@ -69,13 +69,7 @@ public class FlowTableUtils {
      * @param tableId 流表id
      * @return 是否成功删除
      */
-<<<<<<< HEAD
     public static Boolean modifyFlowTable(Integer switchId,Integer tableId){
         return null;
     }
-
-
-=======
-    Boolean modifyFlowTable(Integer switchId,Integer tableId);
->>>>>>> origin
 }
