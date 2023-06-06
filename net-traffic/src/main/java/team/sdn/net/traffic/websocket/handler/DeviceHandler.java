@@ -56,7 +56,11 @@ public class DeviceHandler implements WebSocketHandler {
                 params[i] = null;
             }
         }
-        Object result = serviceMethod.invoke(service, params);
+        Object result = null;
+        if (params.length != 0) {
+            result = serviceMethod.invoke(service, params);
+        }
+        result = serviceMethod.invoke(service);
         sendMsg(session,result);
     }
 

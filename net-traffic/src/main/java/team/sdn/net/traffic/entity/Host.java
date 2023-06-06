@@ -2,17 +2,18 @@ package team.sdn.net.traffic.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
  * @author TokisakiKurumi
  * @className Host
  * @date 2023/6/6
- * @description
+ * @description 主机信息类
  **/
-@Data
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class Host {
     /**
      * 主机ID

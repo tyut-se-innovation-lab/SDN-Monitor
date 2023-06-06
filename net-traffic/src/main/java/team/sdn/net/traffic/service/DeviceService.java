@@ -1,8 +1,7 @@
 package team.sdn.net.traffic.service;
 
-import team.sdn.domain.Host;
-import team.sdn.domain.Switch;
-import team.sdn.domain.Topology;
+import team.sdn.net.traffic.entity.Host;
+import team.sdn.net.traffic.entity.Switch;
 
 import java.util.List;
 
@@ -21,17 +20,15 @@ public interface DeviceService {
 
     /**
      * 获取主机信息
-     * @param hostId 主机ID
      * @return 主机信息
      */
-    List<Host> getHost(String hostId);
+    List<Host> getHost();
 
     /**
      * 获取交换机信息
-     * @param switchId 交换机ID
      * @return 交换机信息
      */
-    List<Switch> getSwitch(String switchId);
+    List<Switch> getSwitch();
 
 
 }

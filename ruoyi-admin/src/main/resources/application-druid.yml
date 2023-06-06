@@ -54,6 +54,3 @@ spring:
                 wall:
                     config:
                         multi-statement-allow: true
-
-    redis:
-        password: XCC18535507996
