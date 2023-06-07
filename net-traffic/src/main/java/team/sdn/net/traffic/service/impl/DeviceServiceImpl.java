@@ -89,21 +89,6 @@ public class DeviceServiceImpl implements DeviceService {
             newSwitch.setPorts(ports);
             switches.add(newSwitch);
         }
-        /*NodeList ids = document.getElementsByTagName("id");
-        NodeList connectors = document.getElementsByTagName("node-connector");
-        for (int i = 0; i < connectors.getLength(); i++) {
-            Switch newSwitch = new Switch();
-            newSwitch.setSwitchId(ids.item(i).getTextContent());
-            NodeList childNodes = connectors.item(i).getChildNodes();
-            newSwitch.setPorts(new ArrayList<>());
-            for (int j = 0; j < childNodes.getLength(); j++) {
-                newSwitch.getPorts().add(new Port(childNodes.item(3).getTextContent()
-                        ,childNodes.item(0).getTextContent()
-                        ,childNodes.item(8).getTextContent()
-                        ,childNodes.item(11).getTextContent()));
-            }
-            switches.add(newSwitch);
-        }*/
         return switches;
     }
 }

@@ -9,7 +9,7 @@ import team.sdn.net.traffic.service.TrafficService;
  * @author TokisakiKurumi
  * @className TrafficServiceImpl
  * @date 2023/6/2
- * @description
+ * @description TrafficService接口实现类
  **/
 @Service
 public class TrafficServiceImpl implements TrafficService {
