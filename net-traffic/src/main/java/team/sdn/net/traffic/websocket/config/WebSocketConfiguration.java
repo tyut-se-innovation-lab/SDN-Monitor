@@ -21,14 +21,9 @@ import team.sdn.net.traffic.websocket.interceptor.ServerInterceptor;
 @EnableWebSocket
 public class WebSocketConfiguration implements WebSocketConfigurer {
 
-    @Autowired
-    private DeviceHandler deviceHandler;
+    private static DeviceHandler deviceHandler;
 
-    @Autowired
-    private TrafficHandler trafficHandler;
-
-    @Autowired
-    private ServerInterceptor serverInterceptor;
+    private static TrafficHandler trafficHandler;
 
     @Bean
     public ServerEndpointExporter serverEndpointExporter() {
@@ -39,7 +34,17 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(deviceHandler,"/device")
                 .addHandler(trafficHandler,"/traffic")
-                .addInterceptors(serverInterceptor)
+                .addInterceptors(new ServerInterceptor())
                 .setAllowedOrigins("*");
+    }
+
+    @Autowired
+    public void setDeviceHandler(DeviceHandler deviceHandler) {
+        WebSocketConfiguration.deviceHandler = deviceHandler;
+    }
+
+    @Autowired
+    public void setTrafficHandler(TrafficHandler trafficHandler) {
+        WebSocketConfiguration.trafficHandler = trafficHandler;
     }
 }
