@@ -8,7 +8,6 @@ import org.springframework.web.socket.*;
 import team.sdn.net.traffic.service.TrafficService;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**

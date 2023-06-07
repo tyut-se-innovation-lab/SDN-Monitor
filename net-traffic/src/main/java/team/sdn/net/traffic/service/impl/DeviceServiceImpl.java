@@ -12,7 +12,6 @@ import team.sdn.net.traffic.entity.Host;
 import team.sdn.net.traffic.entity.Port;
 import team.sdn.net.traffic.entity.Switch;
 import team.sdn.net.traffic.service.DeviceService;
-import team.sdn.net.traffic.utils.JsonConvertUtil;
 import team.sdn.sdnutils.TopologyUtils;
 
 
