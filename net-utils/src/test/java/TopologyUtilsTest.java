@@ -9,5 +9,9 @@ public class TopologyUtilsTest {
     public void getTopologyTest(){
 
     }
+    @Test
+    public void getAllSwitchTest(){
+        System.out.println(TopologyUtils.getAllSwitch());
+    }
 
 }

@@ -3,6 +3,8 @@ package team.sdn.sdnutils;
 import team.sdn.config.Address;
 import team.sdn.util.HttpSender;
 
+import static team.sdn.util.StringUtil.subRangeString;
+
 /**
  * 拓扑（拓扑图、主机、交换机等信息）相关工具
  * @author Big-Bai
@@ -14,11 +16,11 @@ public class TopologyUtils {
      * @return 拓扑类
      */
     public static String getTopology(){
-        return  HttpSender.get(Address.ODL_ADDRESS+Address.TOPOLOGY,"json");
+        return  HttpSender.get(Address.TOPOLOGY,"json");
     }
 
     public static String getTopologyXML(){
-        return HttpSender.get(Address.ODL_ADDRESS+Address.TOPOLOGY);
+        return HttpSender.get(Address.TOPOLOGY);
     }
 
     //交换机
@@ -27,7 +29,7 @@ public class TopologyUtils {
      * @return 所有交换机信息
      */
     public static String getAllSwitch(){
-        return HttpSender.get(Address.NODES);
+        return subRangeString(HttpSender.get(Address.NODES),"<table","/table>");
     }
 
     /**
@@ -36,7 +38,8 @@ public class TopologyUtils {
      * @return 交换机信息
      */
     public static String getSwitchById(String switchId){
-        return HttpSender.get(Address.NODE_INFO+switchId);
+        return subRangeString(HttpSender.get(Address.NODE_INFO+switchId),"<table","/table>");
+
     }
 
 
