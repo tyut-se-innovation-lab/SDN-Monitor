@@ -12,7 +12,8 @@ import java.util.List;
  **/
 @ToString
 @AllArgsConstructor
-@Setter
+@Data
+@NoArgsConstructor
 public class Switch {
     /**
      * 交换机ID
@@ -22,26 +23,4 @@ public class Switch {
      * 交换机端口集合
      */
     private List<Port> ports;
-}
-
-@AllArgsConstructor
-@ToString
-@NoArgsConstructor
-class Port {
-    /**
-     * 端口名
-     */
-    private String portName;
-    /**
-     * 端口ID
-     */
-    private String portId;
-    /**
-     * 端口号
-     */
-    private String number;
-    /**
-     * 硬件地址
-     */
-    private String hardAddress;
 }

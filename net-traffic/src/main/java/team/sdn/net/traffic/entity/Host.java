@@ -13,7 +13,7 @@ import lombok.ToString;
  **/
 @ToString
 @AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class Host {
     /**
      * 主机ID
