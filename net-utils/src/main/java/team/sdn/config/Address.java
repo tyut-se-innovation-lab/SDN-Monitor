@@ -21,20 +21,20 @@ public class Address {
      * 获取拓扑图<br/>
      * GET
      */
-    public static String TOPOLOGY = "/restconf/operational/network-topology:network-topology";
+    public static String TOPOLOGY = ODL_ADDRESS + "/restconf/operational/network-topology:network-topology";
 
     /**
      * 某个节点的信息<br/>
      * GET<br/>
      * 拼接交换机id
      */
-    public static String NODE_INFO="/restconf/operational/opendaylight-inventory:nodes/node/";
+    public static String NODE_INFO=ODL_ADDRESS + "/restconf/operational/opendaylight-inventory:nodes/node/";
 
     /**
      * 所有交换机信息<br/>
      * GET<br/>
      */
-    public static String NODES = "/restconf/operational/opendaylight-inventory:nodes";
+    public static String NODES =ODL_ADDRESS + "/restconf/operational/opendaylight-inventory:nodes";
 
     /**
      * 查询某个端口信息<br/>
