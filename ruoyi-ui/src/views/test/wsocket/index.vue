@@ -10,8 +10,8 @@ export default {
   name: "test",
   data() {
     return {
-      url: "ws://192.168.0.103:8080/device",
-      protol: "fafafa",
+      url: "/device",
+      protol: "getTopology",
       wsData: {
         token: "token-123456",
         data: "666",
