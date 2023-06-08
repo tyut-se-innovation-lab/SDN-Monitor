@@ -8,9 +8,10 @@
         <version>3.8.5</version>
     </parent>
 
-    <groupId>com.example</groupId>
+    <packaging>jar</packaging>
+
     <artifactId>net-traffic</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>net-traffic</name>
     <description>net-traffic</description>
 
@@ -18,20 +19,37 @@
         <java.version>8</java.version>
     </properties>
     <dependencies>
-        <dependency>
 
+        <!--SpringBoot Test-->
+        <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
+        <!--SpringBoot整合WebSocket-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
+        <!--lombok 简化实体类开发-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!--SDN工具类-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>net-utils</artifactId>
+            <version>3.8.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20230227</version>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

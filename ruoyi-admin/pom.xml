@@ -61,6 +61,13 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-generator</artifactId>
         </dependency>
+
+        <!--网络流量模块-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>net-traffic</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
