@@ -58,22 +58,31 @@ public class NetflowUtils {
      * @return 请求返回值
      */
     public static String bytesPortInputLastSecond(String datasource, SFlowStatistic statistic) {
-        return HttpSender.get(SFlowAddress.SFLOW_ADDRESS + SFlowAddress.METRIC[0] + AGENT
-                + SFlowAddress.METRIC[1] + statistic
-                + SFlowAddress.METRIC[2] + datasource
-                + SFlowAddress.METRIC[3] + "ifinoctets"
-                + SFlowAddress.METRIC[4]);
+        return send(datasource,statistic,"ifinoctets");
     }
 
 
     /**
-     * 获取某个端口过去一秒输入的包数
+     * 获取某个端口过去一秒输入的包数<br/>
+     * 该方法默认使用max统计状态
      *
      * @param datasource 端口编号
      * @return 请求返回值
      */
     public static String pktsPortInputLastSecond(String datasource) {
-        return null;
+        return pktsPortInputLastSecond(datasource, SFlowStatistic.MAX);
+    }
+
+    /**
+     * 获取某个端口过去一秒输入的包数<br/>
+     * 该方法使用传入的统计状态
+     *
+     * @param datasource 端口编号
+     * @param statistic  统计状态
+     * @return 请求返回值
+     */
+    public static String pktsPortInputLastSecond(String datasource, SFlowStatistic statistic) {
+        return send(datasource,statistic,"ifoutoctets");
     }
 
     /**
@@ -104,6 +113,14 @@ public class NetflowUtils {
      */
     public static String portBandwidthUtilizationLastSecond(String datasource) {
         return null;
+    }
+
+    private static String send(String datasource,SFlowStatistic statistic,String metric){
+        return HttpSender.get(SFlowAddress.SFLOW_ADDRESS + SFlowAddress.METRIC[0] + AGENT
+                + SFlowAddress.METRIC[1] + statistic
+                + SFlowAddress.METRIC[2] + datasource
+                + SFlowAddress.METRIC[3] + metric
+                + SFlowAddress.METRIC[4]);
     }
 
 
