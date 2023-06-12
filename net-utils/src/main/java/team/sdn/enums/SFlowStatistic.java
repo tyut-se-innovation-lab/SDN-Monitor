@@ -10,7 +10,6 @@ public enum SFlowStatistic {
     MIN("min"),
     SUM("sum"),
     AVG("avg"),
-
     VAR("var"),
     SDEV("sdev"),
     MED("med"),
