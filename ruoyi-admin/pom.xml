@@ -62,6 +62,11 @@
             <artifactId>ruoyi-generator</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>net-attack</artifactId>
+            <version>3.8.5</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -93,4 +93,19 @@ public class ReadFile {
 
         return stringDoubleHashMap;
     }
+
+    public static void saveParam(){
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("D:\\Alone_0456\\project\\SDN-Monitor\\net-attack\\data\\param.md"));
+            for (String s : paramName) {
+                bufferedWriter.write(String.format("%-25s ---> ",s));
+                bufferedWriter.newLine();
+            }
+
+            bufferedWriter.flush();
+            bufferedWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

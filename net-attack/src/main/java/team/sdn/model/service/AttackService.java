@@ -5,7 +5,6 @@ import team.sdn.model.domain.Param;
 
 @Service
 public class AttackService {
-
     public void saveParamToFile(){
         getParam();
     }
