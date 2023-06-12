@@ -58,7 +58,7 @@ public class NetflowUtils {
      * @return 请求返回值
      */
     public static String bytesPortInputLastSecond(String datasource, SFlowStatistic statistic) {
-        return send(datasource, statistic, "ifinoctets");
+        return "".equals(datasource) ? sendAll(statistic, "ifinoctets") : send(datasource, statistic, "ifinoctets");
     }
 
 
@@ -82,7 +82,7 @@ public class NetflowUtils {
      * @return 请求返回值
      */
     public static String pktsPortInputLastSecond(String datasource, SFlowStatistic statistic) {
-        return send(datasource, statistic, "ifinpkts");
+        return "".equals(datasource) ? sendAll(statistic, "ifinpkts") : send(datasource, statistic, "ifinpkts");
     }
 
     /**
@@ -126,7 +126,7 @@ public class NetflowUtils {
      * @return 请求返回值
      */
     public static String pktsPortOutputLastSecond(String datasource, SFlowStatistic statistic) {
-        return send(datasource, statistic, "ifoutpkts");
+        return "".equals(datasource) ? sendAll(statistic, "ifoutpkts") : send(datasource, statistic, "ifoutpkts");
     }
 
     /**
@@ -149,7 +149,7 @@ public class NetflowUtils {
      * @return 请求返回值
      */
     public static String portBandwidthUtilizationLastSecond(String datasource, SFlowStatistic statistic) {
-        return send(datasource, statistic, "ifoututilization");
+        return "".equals(datasource) ? sendAll(statistic, "ifoututilization") : send(datasource, statistic, "ifoututilization");
     }
 
     private static String send(String datasource, SFlowStatistic statistic, String metric) {
