@@ -1,3 +1,5 @@
+package publictest;
+
 import org.junit.Test;
 import team.sdn.sdnutils.TopologyUtils;
 
