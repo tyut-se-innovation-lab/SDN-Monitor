@@ -9,10 +9,11 @@ import team.sdn.sdnutils.NetflowUtils;
 public class NetflowUtilsTest {
     @Test
     public void datasourceOfSwitchPortTest(){
-        System.out.println(NetflowUtils.datasourceOfSwitchPort("s1-eth1"));
-    }
-    @Test
-    public void getBytesTest(){
-        System.out.println(NetflowUtils.bytesPortInputLastSecond("ALL"));
+        System.err.println(NetflowUtils.datasourceOfSwitchPort("s1-eth1"));
+        System.err.println(NetflowUtils.bytesPortInputLastSecond("100"));
+        System.err.println(NetflowUtils.pktsPortInputLastSecond("100"));
+        System.err.println(NetflowUtils.bytesPortOutputLastSecond("100"));
+        System.err.println(NetflowUtils.pktsPortOutputLastSecond("100"));
+        System.err.println(NetflowUtils.portBandwidthUtilizationLastSecond("100"));
     }
 }

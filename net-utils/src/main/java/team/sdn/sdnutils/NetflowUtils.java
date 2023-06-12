@@ -58,7 +58,7 @@ public class NetflowUtils {
      * @return 请求返回值
      */
     public static String bytesPortInputLastSecond(String datasource, SFlowStatistic statistic) {
-        return send(datasource,statistic,"ifinoctets");
+        return send(datasource, statistic, "ifinoctets");
     }
 
 
@@ -82,7 +82,7 @@ public class NetflowUtils {
      * @return 请求返回值
      */
     public static String pktsPortInputLastSecond(String datasource, SFlowStatistic statistic) {
-        return send(datasource,statistic,"ifoutoctets");
+        return send(datasource, statistic, "ifinpkts");
     }
 
     /**
@@ -92,9 +92,20 @@ public class NetflowUtils {
      * @return 请求返回值
      */
     public static String bytesPortOutputLastSecond(String datasource) {
-        return null;
+        return bytesPortOutputLastSecond(datasource,SFlowStatistic.MAX);
     }
 
+    /**
+     * 获取某个端口过去一秒输出的字节数<br/>
+     * 该方法使用传入的统计状态
+     *
+     * @param datasource 端口编号
+     * @param statistic  统计状态
+     * @return 请求返回值
+     */
+    public static String bytesPortOutputLastSecond(String datasource,SFlowStatistic statistic){
+        return send(datasource,statistic,"ifoutoctets");
+    }
     /**
      * 获取某个端口过去一秒输出的包数
      *
@@ -102,20 +113,42 @@ public class NetflowUtils {
      * @return 请求返回值
      */
     public static String pktsPortOutputLastSecond(String datasource) {
-        return null;
+        return pktsPortOutputLastSecond(datasource,SFlowStatistic.MAX);
     }
 
     /**
-     * 获取某端口带宽利用率(发送字节数占总带宽的百分比)
+     * 获取某个端口过去一秒输出的包数<br/>
+     * 该方法使用传入的统计状态
      *
+     * @param datasource 端口编号
+     * @param statistic  统计状态
+     * @return 请求返回值
+     */
+    public static String pktsPortOutputLastSecond(String datasource,SFlowStatistic statistic) {
+        return send(datasource,statistic,"ifoutpkts");
+    }
+    /**
+     * 获取某端口带宽利用率(发送字节数占总带宽的百分比)<br/>
+     * 该方法默认使用msx统计状态
      * @param datasource 端口编号
      * @return 请求返回值
      */
     public static String portBandwidthUtilizationLastSecond(String datasource) {
-        return null;
+        return portBandwidthUtilizationLastSecond(datasource,SFlowStatistic.MAX);
+    }
+    /**
+     * 获取某端口带宽利用率(发送字节数占总带宽的百分比)<br/>
+     * 该方法使用传入的统计状态
+     *
+     * @param datasource 端口编号
+     * @param statistic  统计状态
+     * @return 请求返回值
+     */
+    public static String portBandwidthUtilizationLastSecond(String datasource,SFlowStatistic statistic) {
+        return send(datasource,statistic,"ifoututilization");
     }
 
-    private static String send(String datasource,SFlowStatistic statistic,String metric){
+    private static String send(String datasource, SFlowStatistic statistic, String metric) {
         return HttpSender.get(SFlowAddress.SFLOW_ADDRESS + SFlowAddress.METRIC[0] + AGENT
                 + SFlowAddress.METRIC[1] + statistic
                 + SFlowAddress.METRIC[2] + datasource
