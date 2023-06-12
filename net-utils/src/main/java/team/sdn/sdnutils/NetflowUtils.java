@@ -150,7 +150,7 @@ public class NetflowUtils {
 
     private static String send(String datasource, SFlowStatistic statistic, String metric) {
         return HttpSender.get(SFlowAddress.SFLOW_ADDRESS + SFlowAddress.METRIC[0] + AGENT
-                + SFlowAddress.METRIC[1] + statistic
+                + SFlowAddress.METRIC[1] + statistic.getValue()
                 + SFlowAddress.METRIC[2] + datasource
                 + SFlowAddress.METRIC[3] + metric
                 + SFlowAddress.METRIC[4]);
