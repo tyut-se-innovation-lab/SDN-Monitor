@@ -58,7 +58,7 @@ public class NetflowUtils {
      * @return 请求返回值
      */
     public static String bytesPortInputLastSecond(String datasource, SFlowStatistic statistic) {
-        return send(datasource, statistic, "ifinoctets");
+        return "".equals(datasource) ? sendAll(statistic, "ifinoctets") : send(datasource, statistic, "ifinoctets");
     }
 
 
@@ -82,7 +82,7 @@ public class NetflowUtils {
      * @return 请求返回值
      */
     public static String pktsPortInputLastSecond(String datasource, SFlowStatistic statistic) {
-        return send(datasource, statistic, "ifinpkts");
+        return "".equals(datasource) ? sendAll(statistic, "ifinpkts") : send(datasource, statistic, "ifinpkts");
     }
 
     /**
@@ -92,7 +92,7 @@ public class NetflowUtils {
      * @return 请求返回值
      */
     public static String bytesPortOutputLastSecond(String datasource) {
-        return bytesPortOutputLastSecond(datasource,SFlowStatistic.MAX);
+        return bytesPortOutputLastSecond(datasource, SFlowStatistic.MAX);
     }
 
     /**
@@ -103,9 +103,10 @@ public class NetflowUtils {
      * @param statistic  统计状态
      * @return 请求返回值
      */
-    public static String bytesPortOutputLastSecond(String datasource,SFlowStatistic statistic){
-        return send(datasource,statistic,"ifoutoctets");
+    public static String bytesPortOutputLastSecond(String datasource, SFlowStatistic statistic) {
+        return "".equals(datasource) ? sendAll(statistic, "ifoutoctets") : send(datasource, statistic, "ifoutoctets");
     }
+
     /**
      * 获取某个端口过去一秒输出的包数
      *
@@ -113,7 +114,7 @@ public class NetflowUtils {
      * @return 请求返回值
      */
     public static String pktsPortOutputLastSecond(String datasource) {
-        return pktsPortOutputLastSecond(datasource,SFlowStatistic.MAX);
+        return pktsPortOutputLastSecond(datasource, SFlowStatistic.MAX);
     }
 
     /**
@@ -124,18 +125,21 @@ public class NetflowUtils {
      * @param statistic  统计状态
      * @return 请求返回值
      */
-    public static String pktsPortOutputLastSecond(String datasource,SFlowStatistic statistic) {
-        return send(datasource,statistic,"ifoutpkts");
+    public static String pktsPortOutputLastSecond(String datasource, SFlowStatistic statistic) {
+        return "".equals(datasource) ? sendAll(statistic, "ifoutpkts") : send(datasource, statistic, "ifoutpkts");
     }
+
     /**
      * 获取某端口带宽利用率(发送字节数占总带宽的百分比)<br/>
      * 该方法默认使用msx统计状态
+     *
      * @param datasource 端口编号
      * @return 请求返回值
      */
     public static String portBandwidthUtilizationLastSecond(String datasource) {
-        return portBandwidthUtilizationLastSecond(datasource,SFlowStatistic.MAX);
+        return portBandwidthUtilizationLastSecond(datasource, SFlowStatistic.MAX);
     }
+
     /**
      * 获取某端口带宽利用率(发送字节数占总带宽的百分比)<br/>
      * 该方法使用传入的统计状态
@@ -144,15 +148,22 @@ public class NetflowUtils {
      * @param statistic  统计状态
      * @return 请求返回值
      */
-    public static String portBandwidthUtilizationLastSecond(String datasource,SFlowStatistic statistic) {
-        return send(datasource,statistic,"ifoututilization");
+    public static String portBandwidthUtilizationLastSecond(String datasource, SFlowStatistic statistic) {
+        return "".equals(datasource) ? sendAll(statistic, "ifoututilization") : send(datasource, statistic, "ifoututilization");
     }
 
     private static String send(String datasource, SFlowStatistic statistic, String metric) {
         return HttpSender.get(SFlowAddress.SFLOW_ADDRESS + SFlowAddress.METRIC[0] + AGENT
-                + SFlowAddress.METRIC[1] + statistic
+                + SFlowAddress.METRIC[1] + statistic.getValue()
                 + SFlowAddress.METRIC[2] + datasource
                 + SFlowAddress.METRIC[3] + metric
+                + SFlowAddress.METRIC[4]);
+    }
+
+    private static String sendAll(SFlowStatistic statistic, String metric) {
+        return HttpSender.get(SFlowAddress.SFLOW_ADDRESS + SFlowAddress.METRIC[0] + AGENT
+                + SFlowAddress.METRIC[1] + statistic.getValue()
+                + SFlowAddress.METRIC[2] + metric
                 + SFlowAddress.METRIC[4]);
     }
 

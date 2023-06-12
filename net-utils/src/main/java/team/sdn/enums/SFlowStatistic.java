@@ -10,7 +10,6 @@ public enum SFlowStatistic {
     MIN("min"),
     SUM("sum"),
     AVG("avg"),
-
     VAR("var"),
     SDEV("sdev"),
     MED("med"),
@@ -20,8 +19,13 @@ public enum SFlowStatistic {
     IQR("iqr"),
     ANY("any");
 
-    private static String value;
+    private String value;
+
+    public String getValue() {
+        return value;
+    }
 
     SFlowStatistic(String value) {
+        this.value = value;
     }
 }
