@@ -5,6 +5,12 @@ package team.sdn.config;
  * @author Big-Bai
  **/
 public class SFlowAddress {
+    /**
+     * sflow地址
+     */
     public static String SFLOW_ADDRESS = "http://192.168.1.250:8008";
-    public static String METRIC = "/metric/";
+    /**
+     *0 + Agent + 1 + statistic + 2 + datasource + 3 + metric + 4
+     */
+    public static String[] METRIC = {"/metric/","/",":",".","/json"};
 }
