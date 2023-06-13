@@ -3,6 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="team.sdn.net.traffic.mapper.TrafficMapper">
+    <insert id="insertTraffic">
+        insert into traffic_table (metric_value) values (#{rate})
+    </insert>
 
+    <delete id="deleteTraffic">
+        <![CDATA[delete from traffic_table where last_update < #{time}]]>
+    </delete>
 
+    <select id="getTraffic" resultType="team.sdn.net.traffic.entity.Traffic" >
+        <![CDATA[select * from traffic_table where last_update between #{pastTime} and #{nowTime}]]>
+    </select>
 </mapper>
