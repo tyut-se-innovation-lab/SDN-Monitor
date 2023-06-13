@@ -697,3 +697,10 @@ create table gen_table_column (
   update_time       datetime                                   comment '更新时间',
   primary key (column_id)
 ) engine=innodb auto_increment=1 comment = '代码生成业务表字段';
+
+DROP TABLE IF EXISTS `traffic_table`;
+
+CREATE TABLE `traffic_table` (
+                                 `metric_value` double NOT NULL,
+                                 `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;

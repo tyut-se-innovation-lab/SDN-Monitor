@@ -46,7 +46,6 @@ public class DeviceServiceImpl implements DeviceService {
             NodeList hostPoints = document.getElementsByTagName("attachment-points");
             for (int i = 0; i < hostAddresses.getLength(); i++) {
                 Node address = hostAddresses.item(i);
-                System.out.println(address);
                 Node point = hostPoints.item(i);
                 NodeList addressChildNodes = address.getChildNodes();
                 NodeList pointChildNodes = point.getChildNodes();
