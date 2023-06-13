@@ -31,6 +31,7 @@ public class DeviceHandler implements WebSocketHandler {
     @Autowired
     private DeviceService service;
 
+
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         int count = LINK_COUNT.incrementAndGet();
@@ -57,8 +58,9 @@ public class DeviceHandler implements WebSocketHandler {
         Object result = null;
         if (params.length != 0) {
             result = serviceMethod.invoke(service, params);
+        } else {
+            result = serviceMethod.invoke(service);
         }
-        result = serviceMethod.invoke(service);
         sendMsg(session,result);
     }
 

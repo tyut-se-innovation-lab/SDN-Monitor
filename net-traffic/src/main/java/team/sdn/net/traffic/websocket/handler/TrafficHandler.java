@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
 import team.sdn.net.traffic.service.TrafficService;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -31,6 +32,7 @@ public class TrafficHandler implements WebSocketHandler {
     @Autowired
     private TrafficService service;
 
+
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         int count = LINK_COUNT.incrementAndGet();
@@ -44,8 +46,9 @@ public class TrafficHandler implements WebSocketHandler {
         JSONObject jsonObject = JSONObject.parseObject(String.valueOf(message.getPayload()));
         String method = (String) session.getAttributes().get("method");
         Object[] params = jsonObject.values().toArray();
-        Class[] classes = new Class[params.length];
-        for (int i = 0; i < params.length; i++) {
+        Class[] classes = new Class[params.length+1];
+        classes[0] = WebSocketSession.class;
+        for (int i = 1; i < params.length+1; i++) {
             classes[i] = String.class;
         }
         Method serviceMethod = service.getClass().getDeclaredMethod(method,classes);
@@ -54,8 +57,13 @@ public class TrafficHandler implements WebSocketHandler {
                 params[i] = null;
             }
         }
-        Object result = serviceMethod.invoke(service, params);
 
+        Object result = null;
+        if (params.length != 0) {
+            serviceMethod.invoke(service,session,params[0]);
+        } else {
+            serviceMethod.invoke(service,session);
+        }
     }
 
     @Override
@@ -67,6 +75,18 @@ public class TrafficHandler implements WebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
         LINK_COUNT.decrementAndGet();
         log.info("SessionID:" + session.getId() + "退出连接");
+        session.close();
+    }
+
+    /**
+     * 发送JSON消息给客户端
+     * @param session 与客户端的连接
+     * @param t 发送的消息
+     * @param <T> 泛型
+     * @throws IOException IO异常
+     */
+    public <T> void sendMsg(WebSocketSession session,T t) throws IOException {
+        session.sendMessage(new TextMessage(JSONObject.toJSONString(t)));
     }
 
     @Override
@@ -74,7 +94,5 @@ public class TrafficHandler implements WebSocketHandler {
         return false;
     }
 
-    private void memoryThread(Object result) {
-
-    }
 }
+
