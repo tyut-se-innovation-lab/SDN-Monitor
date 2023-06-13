@@ -39,6 +39,7 @@
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>net-traffic</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
     </dependencies>
