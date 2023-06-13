@@ -4,10 +4,14 @@ export default class Line extends Charts {
      * 构造函数
      * @param {String} title 标题
      * @param {String} containerId 容器ID
+     * @param {Array} data 数据
      */
-    constructor(title, containerId) {
+    constructor(title, containerId, data) {
+        console.log(666);
         super(title, containerId);
-        this.data = [65, 66, 67, 68, 69];
+        this.data = data;
+
+        console.log(this.title);
     }
 
     /**
@@ -25,19 +29,20 @@ export default class Line extends Charts {
             //     trigger: "axis"
             // },
             xAxis: {
-                type: 'category',
-                data: ['A', 'B', 'C', 'D', 'E']
+                type: 'time',
             },
             yAxis: {
                 type: 'value'
             },
             series: [
                 {
+                    showSymbol: false,
                     type: 'line',
                     data: this.data
                 }
             ]
         }
-        super().init(option);
+        console.log(this.data);
+        super.init(option);
     }
 }

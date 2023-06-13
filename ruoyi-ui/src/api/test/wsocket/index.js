@@ -1,6 +1,5 @@
 import request from '@/utils/request';
 import getData from '@/utils'
-import { reject } from 'lodash';
 
 let baseUrl = 'ws://192.168.0.108:8080';
 
@@ -17,13 +16,9 @@ export default class WebsocketLink {
         this.ws.onopen = function () {
             // 发送数据
             if (this.ws.readyState === 1) {
-
                 if (!connect) {
                     //第一次向服务端发送请求
-
                     this.ws.send(this.token)
-
-
                     connect = true;
                 } else {
                     this.ws.send(JSON.stringify(this.data));
@@ -55,6 +50,10 @@ export default class WebsocketLink {
         if (this.ws.readyState === 1) {
             this.ws.send(JSON.stringify(data)); // 向服务端发送请求
         }
+    }
+
+    close() {
+        this.ws.close();
     }
 }
 

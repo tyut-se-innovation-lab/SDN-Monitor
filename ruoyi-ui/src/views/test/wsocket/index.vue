@@ -11,7 +11,7 @@ export default {
   data() {
     return {
       url: "/device",
-      protol: "getTopology",
+      protol: "getSwitch",
       wsData: {
         token: "token-123456",
         data: "666",
@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     sendWs() {
-      this.ws.sendWs();
+      this.ws.sendWs({});
     },
   },
   mounted() {

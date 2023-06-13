@@ -22,7 +22,7 @@ export default class Relate {
 
         let option = {
             title: {
-                text: 'Basic Graph'
+                text: 'Controls'
             },
 
             tooltip: {},
