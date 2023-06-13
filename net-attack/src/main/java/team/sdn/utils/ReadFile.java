@@ -11,16 +11,17 @@ public class ReadFile {
     private static final int PARAMETER_NUM = 43;
     private static Map<String, AtomicInteger>[] record;
     private static String[] paramName;
+
     static {
-        paramName = new String[]{" ","Duration","Protocol Type","Service","Flag","Src Bytes",
-            "Dst Bytes","Land","Wrong Fragment","Urgent","Hot",
-            "Num Failed Logins","Logged In","Num Compromised","Root Shell","Su Attempted",
-            "Num Root","Num File Creations","Num Shells","Num Access Files","Num Outbound Cmds",
-            "Is Hot Logins","Is Guest Login","Count","Srv Count","Serror Rate",
-            "Srv Serror Rate","Rerror Rate","Srv Rerror Rate","Same Srv Rate","Diff Srv Rate",
-            "Srv Diff Host Rate","Dst Host Count","Dst Host Srv Count","Dst Host Same Srv Rate","Dst Host Diff Srv Rate",
-            "Dst Host Same Src Port Rate","Dst Host Srv Diff Host Rate","Dst Host Serror Rate","Dst Host Srv Serror Rate","Dst Host Rerror Rate",
-            "Dst Host Srv Rerror Rate","Class","Difficulty Level"};
+        paramName = new String[]{" ", "Duration", "Protocol Type", "Service", "Flag", "Src Bytes",
+                "Dst Bytes", "Land", "Wrong Fragment", "Urgent", "Hot",
+                "Num Failed Logins", "Logged In", "Num Compromised", "Root Shell", "Su Attempted",
+                "Num Root", "Num File Creations", "Num Shells", "Num Access Files", "Num Outbound Cmds",
+                "Is Hot Logins", "Is Guest Login", "Count", "Srv Count", "Serror Rate",
+                "Srv Serror Rate", "Rerror Rate", "Srv Rerror Rate", "Same Srv Rate", "Diff Srv Rate",
+                "Srv Diff Host Rate", "Dst Host Count", "Dst Host Srv Count", "Dst Host Same Srv Rate", "Dst Host Diff Srv Rate",
+                "Dst Host Same Src Port Rate", "Dst Host Srv Diff Host Rate", "Dst Host Serror Rate", "Dst Host Srv Serror Rate", "Dst Host Rerror Rate",
+                "Dst Host Srv Rerror Rate", "Class", "Difficulty Level"};
 
         record = new Map[PARAMETER_NUM];
         for (int i = 0; i < PARAMETER_NUM; i++) {
@@ -63,10 +64,10 @@ public class ReadFile {
                 }
 
                 map.entrySet().stream()
-                        .sorted((a,b) -> b.getValue().intValue() - a.getValue().intValue())
-                        .forEach(entry ->{
+                        .sorted((a, b) -> b.getValue().intValue() - a.getValue().intValue())
+                        .forEach(entry -> {
                             try {
-                                String a = String.format("%-15s -> %06.3f%%",entry.getKey() ,(entry.getValue().doubleValue() / sum) * 100);
+                                String a = String.format("%-15s -> %06.3f%%", entry.getKey(), (entry.getValue().doubleValue() / sum) * 100);
                                 writer.write(a);
                                 writer.newLine();
                             } catch (Exception e) {
@@ -94,11 +95,11 @@ public class ReadFile {
         return stringDoubleHashMap;
     }
 
-    public static void saveParam(){
+    public static void saveParam() {
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("D:\\Alone_0456\\project\\SDN-Monitor\\net-attack\\data\\param.md"));
             for (String s : paramName) {
-                bufferedWriter.write(String.format("%-25s ---> ",s));
+                bufferedWriter.write(String.format("%-25s ---> ", s));
                 bufferedWriter.newLine();
             }
 

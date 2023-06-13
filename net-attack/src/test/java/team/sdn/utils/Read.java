@@ -8,7 +8,7 @@ public class Read {
 
     @Test
     public void testReadFile(){
-        ReadFile.saveParam();
+        ReadFile.read("D:\\Alone_0456\\project\\SDN-Monitor\\net-attack\\src\\main\\resources\\KDDTest+.txt");
         //System.out.println(ReadFile.calPercent(1, 4));
     }
 

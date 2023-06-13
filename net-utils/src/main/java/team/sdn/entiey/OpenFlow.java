@@ -1,4 +1,4 @@
-package team.sdn.domain;
+package team.sdn.entiey;
 
 
 /**
