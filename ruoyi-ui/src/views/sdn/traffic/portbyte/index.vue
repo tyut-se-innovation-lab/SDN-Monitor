@@ -1,5 +1,28 @@
 <template>
-  <div id="portbyte"></div>
+  <div>
+    交换机：<el-select
+      v-model="currentSwitch"
+      placeholder="请选择"
+      @change="changeSwitchPort"
+    >
+      <el-option
+        v-for="item in switchs"
+        :key="item"
+        :label="item"
+        :value="item"
+      >
+      </el-option>
+    </el-select>
+    端口：<el-select
+      v-model="currentPort"
+      placeholder="请选择"
+      @change="changeSwitchPort"
+    >
+      <el-option v-for="item in ports" :key="item" :label="item" :value="item">
+      </el-option>
+    </el-select>
+    <div id="portbyte"></div>
+  </div>
 </template>
 
 <script>
@@ -15,42 +38,116 @@ export default {
         token: "token-123456",
         data: "666",
       },
+      currentSwitchPort: "s1-eth1",
       ws: "",
       wsInstance: "",
-      lineData: [],
+      swInstance: "",
+      switchData: {
+        "openflow:1": [],
+      },
+      currentSwitch: "openflow:1",
+      currentPort: "1",
+      line: "",
+      lineData: {
+        in: [],
+        out: [],
+      },
     };
+  },
+  computed: {
+    switchs() {
+      return Object.keys(this.switchData);
+    },
+    ports() {
+      let index = this.currentSwitch.split(":")[1];
+      return this.switchData[Object.keys(this.switchData)[index]];
+    },
   },
   methods: {
     init() {
       this.initWebSocket();
+      this.getSwitchInfo();
       setTimeout(() => {
-        this.sendWs();
-      }, 500);
+        this.sendWs({ port: this.currentSwitchPort });
+      }, 600);
     },
     initWebSocket() {
       this.wsInstance = new WebsocketLink(this.url, this.protol, this.wsData);
       this.ws = this.wsInstance.init();
       this.ws.onmessage = this.wstOnMessage;
     },
+    getSwitchInfo() {
+      this.swInstance = new WebsocketLink("/device", "getSwitch", this.wsData);
+      this.sw = this.swInstance.init();
+      let obj = {};
+      this.sw.onmessage = function (MessageEvent) {
+        try {
+          let data = JSON.parse(MessageEvent.data);
+
+          data.map((value) => {
+            value.ports.map((item) => {
+              if (item.portId !== `${value.switchId}:LOCAL`) {
+                if (!Array.isArray(obj[value.switchId]))
+                  obj[value.switchId] = [];
+                obj[value.switchId].push(item.number);
+              }
+            });
+          });
+          this.switchData = obj;
+        } catch (e) {}
+      }.bind(this);
+
+      setTimeout(() => {
+        this.swInstance.sendWs({});
+      }, 600);
+    },
     wstOnMessage(MessageEvent) {
       try {
         let data = JSON.parse(MessageEvent.data);
-        // console.log(data);
-        this.lineData.push([new Date(), data.metricValue]);
+        if (data.direction === "in") {
+          this.lineData.in.push([new Date(), data.metricValue]);
+        } else if (data.direction === "out") {
+          this.lineData.out.push([new Date(), data.metricValue]);
+        }
+
+        let last = new Date().getTime();
+        let first = new Date(this.lineData.in[0][0]).getTime();
+
+        if (last - first > 80000) {
+          this.lineData.in.shift();
+          this.lineData.out.shift();
+        }
         this.setLineEcharts(this.lineData);
-      } catch (e) {}
+      } catch (e) {
+        console.log(e);
+      }
     },
     setLineEcharts(data) {
-      new Line("端口输入输出字节速率", "portbyte", data).init();
+      if (!this.line) {
+        this.line = new Line("端口字节速率", "portbyte", {
+          width: 600,
+          height: 400,
+        });
+      }
+
+      this.line.init(data);
     },
-    sendWs() {
-      this.wsInstance.sendWs({});
+    changeSwitchPort() {
+      this.currentSwitchPort = `s${this.currentSwitch.split(":")[1]}-eth${
+        this.currentPort
+      }`;
+      this.lineData.in = [];
+      this.lineData.out = [];
+      this.sendWs({ port: this.currentSwitchPort });
+    },
+    sendWs(data) {
+      this.wsInstance.sendWs(data);
     },
   },
   mounted() {
     this.init();
   },
-  destroy() {
+  beforeDestroy() {
     this.wsInstance.close();
   },
 };
@@ -59,7 +156,7 @@ export default {
 <style scoped>
 #portbyte {
   width: 600px;
-  height: 600px;
+  height: 400px;
   margin: 0 auto;
 }
 </style>

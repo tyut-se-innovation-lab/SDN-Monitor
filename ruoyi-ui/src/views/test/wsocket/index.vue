@@ -10,8 +10,8 @@ export default {
   name: "test",
   data() {
     return {
-      url: "/device",
-      protol: "getSwitch",
+      url: "/traffic",
+      protol: "getPastByteRate",
       wsData: {
         token: "token-123456",
         data: "666",

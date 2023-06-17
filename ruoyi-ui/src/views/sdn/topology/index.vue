@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div id="relate"></div>
+  <div class="relate">
+    <div id="relate" @click="gotoInfo"></div>
     <button @click="sendWs" class="send">
       <svg
         t="1686576109286"
@@ -48,7 +48,7 @@ export default {
       this.initWebSocket();
       setTimeout(() => {
         this.sendWs();
-      }, 200);
+      }, 400);
     },
     /**
      * 初始化websocket
@@ -64,12 +64,14 @@ export default {
     wstOnMessage(MessageEvent) {
       let data = MessageEvent.data;
       try {
+        //数据处理
         let dataHandler = new Data(JSON.parse(JSON.parse(data)));
         let objArr = dataHandler.getPointNum();
         let pointData = objArr[0];
         let nodeInfo = objArr[1];
         dataHandler.linkRemoveDuplicates();
         let link = dataHandler.getSide();
+        //图像生成
         let graph = new Graph(pointData, 100, 200, 200);
         graph.init();
         let point = graph.pointsCoordinate;
@@ -77,7 +79,9 @@ export default {
 
         let node = dataHandler.flatteningData(nodeInfo);
         // console.log(link, node);
+        //图像
         new Relate("玫瑰图", "relate", { node, link }).init();
+        this.wsInstance.close();
       } catch {
         console.log("数据不符,解析错误");
       }
@@ -88,6 +92,9 @@ export default {
     sendWs() {
       this.wsInstance.sendWs({});
     },
+    gotoInfo() {
+      this.$router.push({ path: "/sdn/info/index" });
+    },
   },
   mounted() {
     this.init();
@@ -97,8 +104,8 @@ export default {
 
 <style>
 #relate {
-  width: 650px;
-  height: 650px;
+  width: 600px;
+  height: 600px;
   padding: 20px;
   margin: 0 auto;
 }

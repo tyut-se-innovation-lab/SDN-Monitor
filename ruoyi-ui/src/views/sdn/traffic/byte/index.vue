@@ -17,7 +17,10 @@ export default {
       },
       ws: "",
       wsInstance: "",
-      lineData: [],
+      line: "",
+      lineData: {
+        arr1: [],
+      },
     };
   },
   methods: {
@@ -25,23 +28,38 @@ export default {
       this.initWebSocket();
       setTimeout(() => {
         this.sendWs();
-      }, 500);
+      }, 400);
     },
     initWebSocket() {
-      this.wsInstance = new WebsocketLink(this.url, this.protol, this.wsData);
-      this.ws = this.wsInstance.init();
-      this.ws.onmessage = this.wstOnMessage;
+      if (!this.wsInstance) {
+        console.log(this.wsInstance);
+        this.wsInstance = new WebsocketLink(this.url, this.protol, this.wsData);
+        this.ws = this.wsInstance.init();
+        this.ws.onmessage = this.wstOnMessage;
+      }
     },
     wstOnMessage(MessageEvent) {
       try {
         let data = JSON.parse(MessageEvent.data);
         // console.log(data);
-        this.lineData.push([new Date(), data.metricValue]);
+        this.lineData.arr1.push([new Date(), data.metricValue]);
+        let last = new Date().getTime();
+        let first = new Date(this.lineData.arr1[0][0]).getTime();
+        if (last - first > 80000) {
+          this.lineData.arr1.shift();
+        }
         this.setLineEcharts(this.lineData);
       } catch (e) {}
     },
     setLineEcharts(data) {
-      new Line("全局字节速率", "byte", data).init();
+      if (!this.line) {
+        this.line = new Line("全局字节速率", "byte", {
+          width: 600,
+          height: 400,
+        });
+      }
+
+      this.line.init(data);
     },
     sendWs() {
       this.wsInstance.sendWs({});
@@ -50,7 +68,7 @@ export default {
   mounted() {
     this.init();
   },
-  destroy() {
+  beforeDestroy() {
     this.wsInstance.close();
   },
 };
@@ -58,8 +76,8 @@ export default {
 
 <style scoped>
 #byte {
-  width: 1000px;
-  height: 600px;
+  width: 600px;
+  height: 400px;
   margin: 0 auto;
 }
 </style>

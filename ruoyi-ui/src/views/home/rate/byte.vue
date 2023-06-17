@@ -1,5 +1,7 @@
 <template>
-  <div id="pack"></div>
+  <div class="box">
+    <div id="byte"></div>
+  </div>
 </template>
 
 <script>
@@ -10,7 +12,7 @@ export default {
   data() {
     return {
       url: "/traffic",
-      protol: "getAllPackRate",
+      protol: "getAllByteRate",
       wsData: {
         token: "token-123456",
         data: "666",
@@ -50,13 +52,14 @@ export default {
     },
     setLineEcharts(data) {
       if (!this.line) {
-        this.line = new Line("全局包速率", "pack", {
-          width: 600,
+        this.line = new Line("全局字节速率", "byte", {
+          width: 700,
           height: 400,
         });
+        this.line.init(data);
+      } else {
+        this.line.init(data);
       }
-
-      this.line.init(data);
     },
     sendWs() {
       this.wsInstance.sendWs({});
@@ -65,16 +68,26 @@ export default {
   mounted() {
     this.init();
   },
-  beforeDestroy() {
+  destroy() {
     this.wsInstance.close();
   },
 };
 </script>
 
 <style scoped>
-#pack {
-  width: 600px;
-  height: 400px;
+.box {
+  width: 750px;
+}
+#byte {
+  width: 700px;
+  height: 380px;
   margin: 0 auto;
+  position: relative;
+  background: #ffffff;
+  border: 6px solid #ffffff;
+  margin: 10px;
+  margin-left: 20px;
+  box-shadow: -8px -8px 15px rgba(255, 255, 255, 1),
+    8px 8px 25px rgba(0, 0, 0, 0.15);
 }
 </style>

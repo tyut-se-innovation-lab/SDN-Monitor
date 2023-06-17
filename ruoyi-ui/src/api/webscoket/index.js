@@ -1,12 +1,16 @@
 import request from '@/utils/request';
 
-let baseUrl = 'ws://192.168.0.114:8080';
+let baseUrl = 'ws://192.168.0.111:8080';
 
 export default class WebsocketLink {
     constructor(url, protol, { token, data }) {
-        this.ws = new WebSocket(`${baseUrl}${url}`, [protol]);
-        this.token = token;
-        this.data = data;
+        if (this.ws) {
+            return this.ws;
+        } else {
+            this.ws = new WebSocket(`${baseUrl}${url}`, [protol]);
+            this.token = token;
+            this.data = data;
+        }
     }
 
     init() {
@@ -17,12 +21,11 @@ export default class WebsocketLink {
             if (this.ws.readyState === 1) {
                 if (!connect) {
                     //第一次向服务端发送请求
-                    this.ws.send(this.token)
+                    this.ws.send(this.token);
                     connect = true;
                 } else {
                     this.ws.send(JSON.stringify(this.data));
                 }
-
             }
         }
 

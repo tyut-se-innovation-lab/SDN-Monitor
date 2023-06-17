@@ -1,26 +1,36 @@
 <template>
-  <div id="pack"></div>
+  <!-- 水球百分比 -->
+  <div class="box">
+    <h3><b>链路实际使用情况</b></h3>
+    <h4>
+      带宽速率<span style="font-size: 25px; font-weight: 600">{{ rate }}</span
+      >Mbps
+    </h4>
+    <div id="circlepercent"></div>
+  </div>
 </template>
 
 <script>
 import WebsocketLink from "@/api/webscoket/index.js";
-import Line from "@/api/charts/line/index.js";
+import Percent from "@/api/charts/percent/index.js";
 export default {
-  name: "node",
+  name: "percent",
   data() {
     return {
       url: "/traffic",
-      protol: "getAllPackRate",
+      protol: "getAllBandWidthProportion",
       wsData: {
         token: "token-123456",
         data: "666",
       },
+      params: {
+        title: "水球百分比",
+        containerId: "circlepercent",
+        data: "",
+      },
       ws: "",
       wsInstance: "",
-      line: "",
-      lineData: {
-        arr1: [],
-      },
+      rate: 700,
     };
   },
   methods: {
@@ -30,6 +40,7 @@ export default {
         this.sendWs();
       }, 500);
     },
+
     initWebSocket() {
       this.wsInstance = new WebsocketLink(this.url, this.protol, this.wsData);
       this.ws = this.wsInstance.init();
@@ -38,7 +49,6 @@ export default {
     wstOnMessage(MessageEvent) {
       try {
         let data = JSON.parse(MessageEvent.data);
-        // console.log(data);
         this.lineData.arr1.push([new Date(), data.metricValue]);
         let last = new Date().getTime();
         let first = new Date(this.lineData.arr1[0][0]).getTime();
@@ -50,13 +60,10 @@ export default {
     },
     setLineEcharts(data) {
       if (!this.line) {
-        this.line = new Line("全局包速率", "pack", {
-          width: 600,
-          height: 400,
-        });
+        this.line = new Line("全局包速率", "byte", data).init(data);
+      } else {
+        this.line.init(data);
       }
-
-      this.line.init(data);
     },
     sendWs() {
       this.wsInstance.sendWs({});
@@ -64,17 +71,35 @@ export default {
   },
   mounted() {
     this.init();
-  },
-  beforeDestroy() {
-    this.wsInstance.close();
+    new Percent(this.params).init(0.54);
   },
 };
 </script>
 
 <style scoped>
-#pack {
-  width: 600px;
+.box {
+  width: 250px;
   height: 400px;
+  background: #ffffff;
+  border: 6px solid #ffffff;
+  margin: 10px;
+  margin-left: 20px;
+  box-shadow: -8px -8px 15px rgba(255, 255, 255, 1),
+    8px 8px 25px rgba(0, 0, 0, 0.15);
+}
+#circlepercent {
+  width: 200px;
+  height: 200px;
   margin: 0 auto;
+}
+.box h3 {
+  width: 250px;
+  margin: 20px auto;
+  text-align: center;
+}
+.box h4 {
+  width: 250px;
+  margin: 20px auto;
+  text-align: center;
 }
 </style>

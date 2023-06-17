@@ -5,7 +5,12 @@ let baseUrl = 'ws://192.168.0.109:8080';
 
 export default class WebsocketLink {
     constructor(url, protol, { token, data }) {
-        this.ws = new WebSocket(`${baseUrl}${url}`, [protol]);
+        if (this.ws) {
+            return this.ws;
+        } else {
+            this.ws = new WebSocket(`${baseUrl}${url}`, [protol]);
+        }
+
         this.token = token;
         this.data = data;
     }

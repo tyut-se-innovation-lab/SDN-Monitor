@@ -1,7 +1,7 @@
 import request from '@/utils/request';
 import getData from '@/utils'
 
-let baseUrl = 'ws://192.168.0.108:8080';
+let baseUrl = 'ws://192.168.0.114:8080';
 
 export default class WebsocketLink {
     constructor(url, protol, { token, data }) {

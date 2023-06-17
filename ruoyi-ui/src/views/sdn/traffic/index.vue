@@ -28,5 +28,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+#traffic {
+  display: flex;
+}
 </style>

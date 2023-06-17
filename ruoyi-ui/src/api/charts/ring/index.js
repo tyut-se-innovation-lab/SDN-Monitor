@@ -4,29 +4,32 @@ export default class Ring extends Charts {
      * 构造函数
      * @param {String} title 标题
      * @param {String} containerId 容器ID
+     * @param {Object} startWH 初始宽高
      */
-    constructor(title, containerId) {
-        super(title, containerId);
+    constructor(title, containerId, startWH) {
+        console.log(containerId);
+        super(title, containerId, startWH);
+
     }
 
     /**
      * 初始化
      */
-    init() {
+    init(value, name) {
         const gaugeData = [
             {
                 //百分比值
-                value: 20,
-                name: 'Perfect',
+                value: value,
+                name: name,
                 title: {
                     //距离中心的偏移
-                    offsetCenter: ['0%', '-30%']
+                    offsetCenter: ['0%', '-20%']
                 },
                 detail: {
                     //是否开启标签的数字动画
                     valueAnimation: true,
                     //距离中心的偏移
-                    offsetCenter: ['0%', '-20%']
+                    offsetCenter: ['0%', '-00%']
                 }
             }
         ];
@@ -52,7 +55,7 @@ export default class Ring extends Charts {
                     },
                     axisLine: {
                         lineStyle: {
-                            width: 40
+                            width: 18
                         }
                     },
                     splitLine: {
@@ -84,6 +87,6 @@ export default class Ring extends Charts {
                 }
             ]
         };
-        super().init(option);
+        super.init(option);
     }
 }
