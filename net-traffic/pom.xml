@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>SDN-Monitor</artifactId>
-        <groupId>com.ruoyi</groupId>
+        <groupId>com.net</groupId>
         <version>3.8.5</version>
     </parent>
 
@@ -40,7 +40,7 @@
 
         <!--SDN工具类-->
         <dependency>
-            <groupId>com.ruoyi</groupId>
+            <groupId>com.net</groupId>
             <artifactId>net-utils</artifactId>
             <version>3.8.5</version>
         </dependency>
