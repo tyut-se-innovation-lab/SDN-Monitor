@@ -33,7 +33,7 @@ export default {
   name: "relate",
   data() {
     return {
-      title: "OpenDaylight的流量监控及调度与深度学习网络入侵检测",
+      title: "SDN赋能：AI驱动的网络安全与智能流量管理平台",
       url: "/device",
       protol: "getTopology",
       wsData: {

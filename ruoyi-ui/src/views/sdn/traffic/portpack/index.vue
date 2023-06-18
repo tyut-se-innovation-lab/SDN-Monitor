@@ -45,7 +45,7 @@ export default {
         "openflow:1": [],
       },
       currentSwitch: "openflow:1",
-      currentPort: "1",
+      currentPort: "3",
       line: "",
       lineData: {
         in: [],
@@ -67,7 +67,7 @@ export default {
       this.initWebSocket();
       this.getSwitchInfo();
       setTimeout(() => {
-        this.sendWs({ port: "s1-eth1" });
+        this.sendWs({ port: "s1-eth3" });
       }, 700);
     },
     initWebSocket() {

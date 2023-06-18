@@ -38,7 +38,7 @@ export default {
         token: "token-123456",
         data: "666",
       },
-      currentSwitchPort: "s1-eth1",
+      currentSwitchPort: "s1-eth3",
       ws: "",
       wsInstance: "",
       swInstance: "",
@@ -46,7 +46,7 @@ export default {
         "openflow:1": [],
       },
       currentSwitch: "openflow:1",
-      currentPort: "1",
+      currentPort: "3",
       line: "",
       lineData: {
         in: [],

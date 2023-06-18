@@ -1,12 +1,12 @@
 export default function attackRank() {
     let arr = [];
     arr[0] = {
-        name: "normal",
-        value: "33.3",
+        name: "DDos",
+        value: "26.66",
     };
     arr[1] = {
-        name: "DDos",
-        value: "22.5"
+        name: "Probe",
+        value: "20.0"
     }
     return arr;
 }
