@@ -13,10 +13,8 @@ import javax.xml.parsers.ParserConfigurationException;
  * @date 2023/6/6
  * @description 配置DocumentBuilder类
  **/
-@Configuration
 public class DocumentBuilderConfig {
-    @Bean
-    public DocumentBuilder documentBuilder() {
+    public static DocumentBuilder documentBuilder() {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             return factory.newDocumentBuilder();

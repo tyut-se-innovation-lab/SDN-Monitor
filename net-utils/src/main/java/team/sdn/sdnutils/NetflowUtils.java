@@ -152,6 +152,14 @@ public class NetflowUtils {
         return "".equals(datasource) ? sendAll(statistic, "ifoututilization") : send(datasource, statistic, "ifoututilization");
     }
 
+    public static String ifOutUtilization(String datasource,SFlowStatistic statistic) {
+        return "".equals(datasource) ? sendAll(statistic, "ifoututilization") : send(datasource, statistic, "ifoututilization");
+    }
+
+    public static String ifInUtilization(String datasource,SFlowStatistic statistic) {
+        return "".equals(datasource) ? sendAll(statistic, "ifinutilization") : send(datasource, statistic, "ifoututilization");
+    }
+
     private static String send(String datasource, SFlowStatistic statistic, String metric) {
         return HttpSender.get(SFlowAddress.SFLOW_ADDRESS + SFlowAddress.METRIC[0] + AGENT
                 + SFlowAddress.METRIC[1] + statistic.getValue()

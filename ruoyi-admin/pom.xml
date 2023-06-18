@@ -62,12 +62,11 @@
             <artifactId>ruoyi-generator</artifactId>
         </dependency>
 
-        <!--网络流量模块-->
         <dependency>
             <groupId>com.ruoyi</groupId>
-            <artifactId>net-traffic</artifactId>
+            <artifactId>net-attack</artifactId>
+            <version>3.8.5</version>
         </dependency>
-
     </dependencies>
 
     <build>

@@ -1,10 +1,8 @@
 package team.sdn.sdnutils;
 
 import team.sdn.config.Address;
-import team.sdn.domain.OpenFlow;
+import team.sdn.entiey.OpenFlow;
 import team.sdn.util.HttpSender;
-
-import java.util.List;
 
 /**
  * 流表相关工具

@@ -1,6 +1,5 @@
 package team.sdn.net.traffic.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -8,6 +7,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import team.sdn.net.traffic.config.DocumentBuilderConfig;
 import team.sdn.net.traffic.entity.Host;
 import team.sdn.net.traffic.entity.Port;
 import team.sdn.net.traffic.entity.Switch;
@@ -15,7 +15,6 @@ import team.sdn.net.traffic.service.DeviceService;
 import team.sdn.sdnutils.TopologyUtils;
 
 
-import javax.xml.parsers.DocumentBuilder;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -29,8 +28,6 @@ import java.util.List;
  **/
 @Service
 public class DeviceServiceImpl implements DeviceService {
-    @Autowired
-    private DocumentBuilder builder;
 
     @Override
     public String getTopology() {
@@ -41,7 +38,7 @@ public class DeviceServiceImpl implements DeviceService {
     public List<Host> getHost() {
         List<Host> hosts = new ArrayList<>();
         try {
-            Document document = builder.parse(new InputSource(new StringReader(TopologyUtils.getTopologyXML())));
+            Document document = DocumentBuilderConfig.documentBuilder().parse(new InputSource(new StringReader(TopologyUtils.getTopologyXML())));
             NodeList hostAddresses = document.getElementsByTagName("addresses");
             NodeList hostPoints = document.getElementsByTagName("attachment-points");
             for (int i = 0; i < hostAddresses.getLength(); i++) {
@@ -66,7 +63,7 @@ public class DeviceServiceImpl implements DeviceService {
         List<Switch> switches = new ArrayList<>();
         Document document = null;
         try {
-            document = builder.parse(new InputSource(new StringReader(TopologyUtils.getAllSwitch())));
+            document = DocumentBuilderConfig.documentBuilder().parse(new InputSource(new StringReader(TopologyUtils.getAllSwitch())));
         } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
