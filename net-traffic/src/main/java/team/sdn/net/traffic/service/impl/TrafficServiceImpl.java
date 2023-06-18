@@ -46,7 +46,7 @@ public class TrafficServiceImpl implements TrafficService {
     /**
      * 线程池
      */
-    private final ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(10, 20, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
+    private final ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(20, 50, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
 
     /**
      * 网络输入流量
@@ -76,13 +76,17 @@ public class TrafficServiceImpl implements TrafficService {
     @PostConstruct
     @Override
     public void getInstantByteRate() {
+        //线程池获取线程
         poolExecutor.execute(() -> {
             while (true) {
                 try {
+                    //通过sFlow获得流量数据
                     String rate = NetflowUtils.bytesPortInputLastSecond("", SFlowStatistic.SUM);
                     JsonNode node = objectMapper.readTree(rate).get(0);
+                    //解析数据
                     byteTraffic.setMetricValue(node.get("metricValue").toString());
                     synchronized (flowPerMinute.getClass()) {
+                        //记录数据
                         flowPerMinute.set(flowPerMinute.get() + Double.parseDouble(byteTraffic.getMetricValue()));
                         count.incrementAndGet();
                     }
@@ -102,6 +106,11 @@ public class TrafficServiceImpl implements TrafficService {
                     session.sendMessage(new TextMessage(objectMapper.writeValueAsString(byteTraffic)));
                     Thread.sleep(1000);
                 } catch (IOException | InterruptedException e) {
+                    try {
+                        session.close();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                     e.printStackTrace();
                 }
             }
@@ -132,6 +141,7 @@ public class TrafficServiceImpl implements TrafficService {
         LocalDateTime dateTime = time.withSecondOfMinute(0).withMinuteOfHour(time.getMinuteOfHour() + 1);
         Duration duration = new Duration(time.toDateTime(), dateTime.toDateTime());
         long delay = duration.getMillis();
+        //设置定时任务,每收集一分钟记录一次
         service.scheduleAtFixedRate(() -> {
             try {
                 double rate;
@@ -141,6 +151,7 @@ public class TrafficServiceImpl implements TrafficService {
                     num = count.getAndSet(0);
                 }
                 rate /= num;
+                //存入流量数据
                 mapper.insertTraffic(rate);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -156,6 +167,11 @@ public class TrafficServiceImpl implements TrafficService {
                     session.sendMessage(new TextMessage(objectMapper.writeValueAsString(packTraffic)));
                     Thread.sleep(1000);
                 } catch (IOException | InterruptedException e) {
+                    try {
+                        session.close();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                     e.printStackTrace();
                 }
             }
@@ -171,6 +187,11 @@ public class TrafficServiceImpl implements TrafficService {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
+                    try {
+                        session.close();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                     e.printStackTrace();
                 }
             }
@@ -201,8 +222,15 @@ public class TrafficServiceImpl implements TrafficService {
             traffic.setMetricValue(node.get(0).get("metricValue").toString());
             traffic.setLastUpdate(node.get(0).get("lastUpdate").toString());
             traffic.setDirection("in");
-            session.sendMessage(new TextMessage(objectMapper.writeValueAsString(traffic)));
+            if (session.isOpen()) {
+                session.sendMessage(new TextMessage(objectMapper.writeValueAsString(traffic)));
+            }
         } catch (IOException e) {
+            try {
+                session.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             e.printStackTrace();
         }
     }
@@ -216,8 +244,15 @@ public class TrafficServiceImpl implements TrafficService {
             traffic.setMetricValue(node.get(0).get("metricValue").toString());
             traffic.setLastUpdate(node.get(0).get("lastUpdate").toString());
             traffic.setDirection("in");
-            session.sendMessage(new TextMessage(objectMapper.writeValueAsString(traffic)));
+            if (session.isOpen()) {
+                session.sendMessage(new TextMessage(objectMapper.writeValueAsString(traffic)));
+            }
         } catch (IOException e) {
+            try {
+                session.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             e.printStackTrace();
         }
     }
@@ -231,8 +266,15 @@ public class TrafficServiceImpl implements TrafficService {
             traffic.setMetricValue(node.get(0).get("metricValue").toString());
             traffic.setLastUpdate(node.get(0).get("lastUpdate").toString());
             traffic.setDirection("out");
-            session.sendMessage(new TextMessage(objectMapper.writeValueAsString(traffic)));
+            if (session.isOpen()) {
+                session.sendMessage(new TextMessage(objectMapper.writeValueAsString(traffic)));
+            }
         } catch (IOException e) {
+            try {
+                session.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             e.printStackTrace();
         }
     }
@@ -246,8 +288,15 @@ public class TrafficServiceImpl implements TrafficService {
             traffic.setMetricValue(node.get(0).get("metricValue").toString());
             traffic.setLastUpdate(node.get(0).get("lastUpdate").toString());
             traffic.setDirection("out");
-            session.sendMessage(new TextMessage(objectMapper.writeValueAsString(traffic)));
+            if (session.isOpen()) {
+                session.sendMessage(new TextMessage(objectMapper.writeValueAsString(traffic)));
+            }
         } catch (IOException e) {
+            try {
+                session.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             e.printStackTrace();
         }
     }
@@ -295,8 +344,64 @@ public class TrafficServiceImpl implements TrafficService {
             try {
                 session.sendMessage(new TextMessage(objectMapper.writeValueAsString(result)));
             } catch (IOException e) {
+                try {
+                    session.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void getPortBandWidthProportion(WebSocketSession session, String port) {
+        poolExecutor.execute(() -> {
+            String portId = NetflowUtils.datasourceOfSwitchPort(port);
+            try {
+                while (session.isOpen()) {
+                    JsonNode inNode = objectMapper.readTree(NetflowUtils.ifInUtilization(portId, SFlowStatistic.SUM));
+                    JsonNode outNode = objectMapper.readTree(NetflowUtils.ifOutUtilization(portId, SFlowStatistic.SUM));
+                    Double value = Double.parseDouble(String.valueOf(inNode.get(0).get("metricValue"))) + Double.parseDouble(String.valueOf(outNode.get(0).get("metricValue")));
+                    if (session.isOpen()) {
+                        session.sendMessage(new TextMessage("{'metricVlaue='"+value+"'}"));
+                    }
+                    Thread.sleep(1000);
+                }
+
+            } catch (IOException | InterruptedException e) {
+                try {
+                    session.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                e.printStackTrace();
+            }
+        });
+    }
+
+    @Override
+    public void getAllBandWidthProportion(WebSocketSession session) {
+        poolExecutor.execute(() -> {
+            try {
+                while (session.isOpen()) {
+                    JsonNode inNode = objectMapper.readTree(NetflowUtils.ifInUtilization("", SFlowStatistic.SUM));
+                    JsonNode outNode = objectMapper.readTree(NetflowUtils.ifOutUtilization("", SFlowStatistic.SUM));
+                    Double value = Double.parseDouble(String.valueOf(inNode.get(0).get("metricValue"))) + Double.parseDouble(String.valueOf(outNode.get(0).get("metricValue")));
+                    Double rate = value * 10000000000.0;
+                    if (session.isOpen()) {
+                        session.sendMessage(new TextMessage("{'metricVlaue='"+rate/180500000000.0+"','rate'='"+rate+"}"));
+                    }
+                    Thread.sleep(1000);
+                }
+            } catch (IOException | InterruptedException e) {
+                try {
+                    session.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                e.printStackTrace();
+            }
+        });
     }
 }

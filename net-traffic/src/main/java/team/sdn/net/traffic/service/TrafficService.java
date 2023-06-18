@@ -87,4 +87,17 @@ public interface TrafficService {
      */
     void getPastByteRate(WebSocketSession session);
 
+    /**
+     * 获取端口带宽占比
+     * @param session WebSocketSession
+     * @param port 端口
+     */
+    void getPortBandWidthProportion(WebSocketSession session,String port);
+
+    /**
+     * 获取全局带宽占比
+     * @param session WebSocketSession
+     */
+    void getAllBandWidthProportion(WebSocketSession session);
+
 }

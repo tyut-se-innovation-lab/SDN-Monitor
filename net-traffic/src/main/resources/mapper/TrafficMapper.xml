@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="team.sdn.net.traffic.mapper.TrafficMapper">
     <insert id="insertTraffic">
-        insert into traffic_table (metric_value) values (#{rate})
+        insert into traffic_table (metric_value) value (#{rate})
     </insert>
 
     <delete id="deleteTraffic">
