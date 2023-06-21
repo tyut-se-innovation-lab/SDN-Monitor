@@ -29,6 +29,8 @@ export default {
         data: "",
       },
       ws: "",
+      metricValue: 0,
+      circle: "",
       wsInstance: "",
       rate: 700,
     };
@@ -36,6 +38,8 @@ export default {
   methods: {
     init() {
       this.initWebSocket();
+      this.circle = new Percent(this.params);
+      this.circle.init(this.metricValue);
       setTimeout(() => {
         this.sendWs();
       }, 500);
@@ -49,14 +53,17 @@ export default {
     wstOnMessage(MessageEvent) {
       try {
         let data = JSON.parse(MessageEvent.data);
-        this.lineData.arr1.push([new Date(), data.metricValue]);
-        let last = new Date().getTime();
-        let first = new Date(this.lineData.arr1[0][0]).getTime();
-        if (last - first > 80000) {
-          this.lineData.arr1.shift();
+        this.rate = (data.rate / 1000000).toFixed(2);
+        if (data.metricValue !== 0) {
+          console.log(data.metricValue);
+          this.circle.init(data.metricValue.toFixed(2));
         }
-        this.setLineEcharts(this.lineData);
-      } catch (e) {}
+      } catch (e) {
+        // console.log(e);
+        let obj = { metricValue: 0.0, rate: 0.0 };
+
+        console.log(JSON.stringify(obj));
+      }
     },
     setLineEcharts(data) {
       if (!this.line) {
@@ -71,7 +78,7 @@ export default {
   },
   mounted() {
     this.init();
-    new Percent(this.params).init(0.54);
+    // new Percent(this.params).init(0.54);
   },
 };
 </script>

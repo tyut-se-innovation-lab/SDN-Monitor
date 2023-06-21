@@ -53,7 +53,7 @@ export default {
     setLineEcharts(data) {
       if (!this.line) {
         this.line = new Line("全局字节速率", "byte", {
-          width: 700,
+          width: 660,
           height: 400,
         });
         this.line.init(data);
@@ -76,10 +76,10 @@ export default {
 
 <style scoped>
 .box {
-  width: 750px;
+  width: 680px;
 }
 #byte {
-  width: 700px;
+  width: 630px;
   height: 380px;
   margin: 0 auto;
   position: relative;
