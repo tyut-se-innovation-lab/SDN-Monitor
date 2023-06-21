@@ -102,7 +102,7 @@ export default class PercentCircle {
                     label: {
                         normal: {
                             // formatter: 0.87 * 100 + '\n%',
-                            formatter: 0.4 * 100 + '\n{d|%}',
+                            formatter: value * 100 + '\n{d|%}',
                             //  formatter: function(params){
                             //     return params.value* 100 + " \n%";
                             // },

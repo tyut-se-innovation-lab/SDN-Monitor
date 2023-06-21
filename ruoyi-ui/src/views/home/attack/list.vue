@@ -1,11 +1,11 @@
 <template>
   <div class="state">
     <el-table :data="attackData" style="width: 100%" height="350">
-      <el-table-column prop="id" label="ID" width="80"> </el-table-column>
-      <el-table-column prop="time" label="时间" width="200"> </el-table-column>
-      <el-table-column prop="info" label="危害信息" width="190">
+      <el-table-column prop="id" label="ID" width="65"> </el-table-column>
+      <el-table-column prop="time" label="时间" width="185"> </el-table-column>
+      <el-table-column prop="info" label="危害信息" width="175">
       </el-table-column>
-      <el-table-column prop="ip" label="IP地址" width="190"> </el-table-column>
+      <el-table-column prop="ip" label="IP地址" width="165"> </el-table-column>
     </el-table>
   </div>
 </template>
@@ -59,7 +59,7 @@ export default {
 
 <style scoped>
 .state {
-  width: 700px;
+  width: 630px;
   padding: 10px;
   height: 400px;
   position: relative;
